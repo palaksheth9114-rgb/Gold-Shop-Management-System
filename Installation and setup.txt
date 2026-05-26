@@ -1,0 +1,81 @@
+
+# Process to Run the Program
+
+For Python Installation and Setup
+
+# If you’re using Python version below 3.12 ( Reccommeded: Check App required folder )
+
+1. Open Command Prompt.
+2. Run the following command to install pywebview:
+
+   pip install pywebview
+
+3. If you’re using Python 3.13, 3.14, or higher
+
+# Some newer Python versions require extra setup for native builds like `pythonnet`. Follow these steps carefully:
+
+1. Open Command Prompt.
+
+2. Run this command to install Visual Studio Build Tools:
+
+winget install --id Microsoft.VisualStudio.2022.BuildTools -e
+
+(If winget isn’t found, update Windows App Installer from Microsoft Store.)
+
+3. Once the installer opens, check the following workloads:
+   ✅ .NET Framework 4.x development tools
+   ✅ MSBuild
+
+4. Click Install and wait for the installation to complete.
+
+5. After installation, verify that MSBuild is correctly set up by running:
+
+   "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin\MSBuild.exe" -version
+
+ You should see an output similar to:
+ 17.9.2.0
+
+Once verified, Python will now detect MSBuild and successfully compile `pythonnet` or any native package required by `pywebview`.
+
+# Setting up XAMPP and Database
+
+1. Copy your project folder(the one containing your code) into:
+
+   C:\xampp\htdocs\
+
+2. Open the XAMPP Control Panel.
+
+3. Click Start for both:
+ - Apache
+ - MySQL
+
+4. Click Admin next to MySQL → this opens phpMyAdmin.
+
+5. In phpMyAdmin:
+ - Click Import from the top menu.
+ - Select the provided .sql file from your project folder.
+ - Click Go to import it.
+
+6. Once the import is done, verify that the database name appears on the left panel in phpMyAdmin.
+
+
+# Launching the Application
+
+Depending on your setup:
+
+[ If using a Python desktop interface (PyWebView): ] 
+
+ - Double-click or run the `.bat` file provided (e.g., `run.bat`).
+ - This will automatically open your application window.
+
+[ If using a web interface: ]
+
+ - Open your browser.
+ - Visit:
+    http://localhost/your_project_folder_name/php_file
+    
+  - Example:
+    http://localhost/VARUN/login.php 
+
+> Your application is now up and running successfully!
+

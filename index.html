@@ -1,0 +1,2323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gold Shop Management System</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}body{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;padding:20px}.container{max-width:1400px;margin:0 auto;background:#fff;border-radius:15px;box-shadow:0 20px 60px rgba(0,0,0,0.3);overflow:hidden}.header{background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);padding:30px;text-align:center;color:#fff}.header h1{font-size:2.5em;margin-bottom:10px;text-shadow:2px 2px 4px rgba(0,0,0,0.2)}.header p{font-size:1.1em;opacity:0.9}.nav-tabs{display:flex;background:#2d3748;overflow-x:auto;flex-wrap:wrap}.nav-tabs button{flex:1;min-width:120px;padding:15px 20px;background:transparent;border:none;color:#fff;cursor:pointer;font-size:14px;font-weight:600;transition:all 0.3s;border-bottom:3px solid transparent}.nav-tabs button:hover{background:#4a5568}.nav-tabs button.active{background:#4299e1;border-bottom:3px solid #fff}.content{padding:30px}.module{display:none}.module.active{display:block}.module h2{color:#2d3748;margin-bottom:25px;padding-bottom:15px;border-bottom:3px solid #4299e1;font-size:1.8em}.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;margin-bottom:25px}.form-group{display:flex;flex-direction:column}.form-group label{margin-bottom:8px;color:#4a5568;font-weight:600;font-size:14px}.form-group input,.form-group select,.form-group textarea{padding:12px;border:2px solid #e2e8f0;border-radius:8px;font-size:14px;transition:border 0.3s}.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:#4299e1}.form-group input:disabled,.form-group input:readonly{background:#f7fafc;cursor:not-allowed}.form-group textarea{resize:vertical;min-height:80px}.btn{padding:12px 30px;border:none;border-radius:8px;cursor:pointer;font-size:15px;font-weight:600;transition:all 0.3s;margin-right:10px;margin-top:10px}.btn-primary{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff}.btn-primary:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(102,126,234,0.4)}.btn-success{background:linear-gradient(135deg,#11998e 0%,#38ef7d 100%);color:#fff}.btn-success:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(56,239,125,0.4)}.btn-danger{background:linear-gradient(135deg,#eb3349 0%,#f45c43 100%);color:#fff}.btn-danger:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(235,51,73,0.4)}.btn-warning{background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);color:#fff}.btn-warning:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(245,87,108,0.4)}.table-container{overflow-x:auto;margin-top:25px;border-radius:8px;box-shadow:0 2px 10px rgba(0,0,0,0.1)}table{width:100%;border-collapse:collapse;background:#fff}th{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;padding:15px;text-align:left;font-weight:600;font-size:14px}td{padding:12px 15px;border-bottom:1px solid #e2e8f0;font-size:14px}tr:hover{background:#f7fafc}.action-btn{padding:6px 12px;margin:0 3px;border:none;border-radius:5px;cursor:pointer;font-size:12px;font-weight:600;transition:all 0.2s}.edit-btn{background:#4299e1;color:#fff}.edit-btn:hover{background:#3182ce}.delete-btn{background:#f56565;color:#fff}.delete-btn:hover{background:#e53e3e}.alert{padding:15px 20px;margin-bottom:20px;border-radius:8px;font-weight:500;display:none}.alert.show{display:block}.alert-success{background:#c6f6d5;color:#22543d;border-left:4px solid #38a169}.alert-danger{background:#fed7d7;color:#742a2a;border-left:4px solid #e53e3e}.alert-info{background:#bee3f8;color:#2c5282;border-left:4px solid #3182ce}.bill-items{background:#f7fafc;padding:20px;border-radius:8px;margin:20px 0}.bill-item{background:#fff;padding:15px;border-radius:8px;margin-bottom:15px;border:2px solid #e2e8f0}.bill-summary{background:#fff;padding:20px;border-radius:8px;border:2px solid #4299e1;margin-top:20px}.summary-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #e2e8f0}.summary-row.total{font-size:1.3em;font-weight:bold;color:#4299e1;border-top:2px solid #4299e1;margin-top:10px}@media(max-width:768px){.form-grid{grid-template-columns:1fr}.nav-tabs{flex-direction:column}.nav-tabs button{min-width:100%}}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Gold Shop Management System</h1>
+            <p>Complete Jewelry Business Management Solution</p>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="active" onclick="showModule('customer')">👥 Customers</button>
+            <button onclick="showModule('employee')">👔 Employees</button>
+            <button onclick="showModule('supplier')">🏭 Suppliers</button>
+            <button onclick="showModule('product')">📦 Products</button>
+            <button onclick="showModule('inventory')">📊 Inventory</button>
+            <button onclick="showModule('bills')">🧾 Bills</button>
+            <button onclick="showModule('order')">🛒 Orders</button>
+            <button onclick="showModule('goldsale')">💰 Gold Sales</button>
+        </div>
+
+        <div class="content">
+            <!-- Customer Module -->
+            <div id="customer" class="module active">
+                <h2>Customer Management</h2>
+                <div class="alert alert-success" id="customerAlert"></div>
+                
+                <form id="customerForm" onsubmit="handleCustomerSubmit(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Customer ID*</label>
+                            <input type="text" id="customerID" required disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Full Name*</label>
+                            <input type="text" id="customerName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone*</label>
+                            <input type="tel" id="customerPhone" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email*</label>
+                            <input type="email" id="customerEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Address</label>
+                            <textarea id="customerAddress"></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="customerSubmitBtn">Add Customer</button>
+                    <button type="button" class="btn btn-warning" onclick="cancelEdit('customer')">Cancel</button>
+                </form>
+
+                <div class="table-container">
+                    <table id="customerTable">
+                        <thead>
+                            <tr>
+                                <th>Customer ID</th>
+                                <th>Full Name</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Address</th>
+                                <th>Created At</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Employee Module -->
+            <div id="employee" class="module">
+                <h2>Employee Management</h2>
+                <div class="alert alert-success" id="employeeAlert"></div>
+                
+                <form id="employeeForm" onsubmit="handleEmployeeSubmit(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Employee ID*</label>
+                            <input type="text" id="employeeID" required disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Full Name*</label>
+                            <input type="text" id="employeeName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Role*</label>
+                            <select id="employeeRole" required>
+                                <option value="">Select Role</option>
+                                <option value="Manager">Manager</option>
+                                <option value="Salesperson">Salesperson</option>
+                                <option value="Cashier">Cashier</option>
+                                <option value="Supervisor">Supervisor</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Hire Date*</label>
+                            <input type="date" id="employeeHireDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Salary*</label>
+                            <input type="number" step="0.01" id="employeeSalary" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone*</label>
+                            <input type="tel" id="employeePhone" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email*</label>
+                            <input type="email" id="employeeEmail" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="employeeSubmitBtn">Add Employee</button>
+                    <button type="button" class="btn btn-warning" onclick="cancelEdit('employee')">Cancel</button>
+                </form>
+
+                <div class="table-container">
+                    <table id="employeeTable">
+                        <thead>
+                            <tr>
+                                <th>Employee ID</th>
+                                <th>Full Name</th>
+                                <th>Role</th>
+                                <th>Hire Date</th>
+                                <th>Salary</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Supplier Module -->
+            <div id="supplier" class="module">
+                <h2>Supplier Management</h2>
+                <div class="alert alert-success" id="supplierAlert"></div>
+                
+                <form id="supplierForm" onsubmit="handleSupplierSubmit(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Supplier ID*</label>
+                            <input type="text" id="supplierID" required disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Supplier Name*</label>
+                            <input type="text" id="supplierName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Contact Person*</label>
+                            <input type="text" id="supplierContact" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone*</label>
+                            <input type="tel" id="supplierPhone" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email*</label>
+                            <input type="email" id="supplierEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Address</label>
+                            <textarea id="supplierAddress"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Status*</label>
+                            <select id="supplierStatus" required>
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="supplierSubmitBtn">Add Supplier</button>
+                    <button type="button" class="btn btn-warning" onclick="cancelEdit('supplier')">Cancel</button>
+                </form>
+
+                <div class="table-container">
+                    <table id="supplierTable">
+                        <thead>
+                            <tr>
+                                <th>Supplier ID</th>
+                                <th>Name</th>
+                                <th>Contact Person</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Address</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Product Module -->
+            <div id="product" class="module">
+                <h2>Product Management</h2>
+                <div class="alert alert-success" id="productAlert"></div>
+                
+                <form id="productForm" onsubmit="handleProductSubmit(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Product ID*</label>
+                            <input type="text" id="productID" required disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Product Name*</label>
+                            <input type="text" id="productName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Category*</label>
+                            <select id="productCategory" required>
+                                <option value="">Select Category</option>
+                                <option value="Necklace">Necklace</option>
+                                <option value="Ring">Ring</option>
+                                <option value="Bracelet">Bracelet</option>
+                                <option value="Earring">Earring</option>
+                                <option value="Chain">Chain</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Weight (grams)*</label>
+                            <input type="number" step="0.01" id="productWeight" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Purity (Karat)*</label>
+                            <select id="productPurity" required>
+                                <option value="18">18K</option>
+                                <option value="22">22K</option>
+                                <option value="24">24K</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Purchase Price/gram*</label>
+                            <input type="number" step="0.01" id="productPurchasePrice" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Stock Quantity*</label>
+                            <input type="number" id="productStock" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="productSubmitBtn">Add Product</button>
+                    <button type="button" class="btn btn-warning" onclick="cancelEdit('product')">Cancel</button>
+                </form>
+
+                <div class="table-container">
+                    <table id="productTable">
+                        <thead>
+                            <tr>
+                                <th>Product ID</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Weight(g)</th>
+                                <th>Purity</th>
+                                <th>Purchase Price</th>
+                                <th>Stock</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Inventory Module -->
+            <div id="inventory" class="module">
+                <h2>Inventory Management</h2>
+                <div class="alert alert-success" id="inventoryAlert"></div>
+                
+                <form id="inventoryForm" onsubmit="handleInventorySubmit(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Inventory ID*</label>
+                            <input type="text" id="inventoryID" required disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Product*</label>
+                            <select id="inventoryProductID" required>
+                                <option value="">Select Product</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Supplier*</label>
+                            <select id="inventorySupplierID" required>
+                                <option value="">Select Supplier</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Quantity (grams)*</label>
+                            <input type="number" step="0.01" id="inventoryQuantity" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Available Stock (grams)*</label>
+                            <input type="number" step="0.01" id="inventoryAvailableStock" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Last Updated*</label>
+                            <input type="datetime-local" id="inventoryLastUpdated" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="inventorySubmitBtn">Add Inventory</button>
+                    <button type="button" class="btn btn-warning" onclick="cancelEdit('inventory')">Cancel</button>
+                </form>
+
+                <div class="table-container">
+                    <table id="inventoryTable">
+                        <thead>
+                            <tr>
+                                <th>Inventory ID</th>
+                                <th>Product</th>
+                                <th>Supplier</th>
+                                <th>Quantity(g)</th>
+                                <th>Available Stock(g)</th>
+                                <th>Last Updated</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Bills Module -->
+            <div id="bills" class="module">
+                <h2>Bills Management</h2>
+                <div class="alert alert-success" id="billsAlert"></div>
+                
+                <div style="margin-bottom: 25px;">
+                    <button type="button" class="btn btn-primary" onclick="showBillForm()">📄 Create New Bill</button>
+                </div>
+
+                <div id="billFormSection" style="display:none;">
+                    <form id="billsForm" onsubmit="handleBillsSubmit(event)">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Bill ID*</label>
+                                <input type="text" id="billID" required disabled>
+                            </div>
+                            <div class="form-group">
+                                <label>Customer*</label>
+                                <select id="billCustomerID" required>
+                                    <option value="">Select Customer</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Employee*</label>
+                                <select id="billEmployeeID" required>
+                                    <option value="">Select Employee</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Bill Date*</label>
+                                <input type="date" id="billDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Payment Method*</label>
+                                <select id="billPaymentMethod" required>
+                                    <option value="">Select Method</option>
+                                    <option value="Cash">Cash</option>
+                                    <option value="Card">Card</option>
+                                    <option value="UPI">UPI</option>
+                                    <option value="Online">Online</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <h3 style="margin:20px 0;color:#4299e1;">Add Products to Bill</h3>
+                        <div class="bill-items" id="billItemsSection">
+                            <div class="bill-item">
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label>Select Product*</label>
+                                        <select class="billProduct" onchange="updateProductDetails(this)" required>
+                                            <option value="">Select Product</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Weight (grams)*</label>
+                                        <input type="number" step="0.01" class="billWeight" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Purity*</label>
+                                        <input type="text" class="billPurity" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Gold Price/gram*</label>
+                                        <input type="number" step="0.01" class="billGoldPrice" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Making Charges/gram*</label>
+                                        <input type="number" step="0.01" class="billMakingCharges" oninput="calculateItemTotal(this)" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Total Price*</label>
+                                        <input type="number" step="0.01" class="billItemTotal" readonly>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-danger" onclick="removeBillItem(this)" style="margin-top:10px;">Remove Item</button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-success" onclick="addBillItem()">+ Add Another Product</button>
+
+                        <div class="bill-summary">
+                            <h3 style="color:#4299e1;margin-bottom:15px;">Bill Summary</h3>
+                            <div class="summary-row">
+                                <span>Subtotal (Gold + Making):</span>
+                                <span id="billSubtotal">₹0.00</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>GST (3%):</span>
+                                <span id="billGST">₹0.00</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Discount:</span>
+                                <input type="number" step="0.01" id="billDiscount" value="0" oninput="calculateBillTotal()" style="width:150px;text-align:right;padding:5px;border:2px solid #e2e8f0;border-radius:5px;">
+                            </div>
+                            <div class="summary-row total">
+                                <span>Net Payable:</span>
+                                <span id="billNetPayable">₹0.00</span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" id="billsSubmitBtn">Generate Bill</button>
+                        <button type="button" class="btn" style="background:#ec4899;color:#fff" onclick="hideBillForm()">Cancel</button>
+                    </form>
+                </div>
+
+                <div class="table-container">
+                    <table id="billsTable">
+                        <thead>
+                            <tr>
+                                <th>Bill ID</th>
+                                <th>Customer</th>
+                                <th>Employee</th>
+                                <th>Bill Date</th>
+                                <th>Subtotal</th>
+                                <th>GST</th>
+                                <th>Discount</th>
+                                <th>Net Payable</th>
+                                <th>Payment Method</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Order Module -->
+            <div id="order" class="module">
+                <h2>Order Management</h2>
+                <div class="alert alert-success" id="orderAlert"></div>
+                
+                <div style="margin-bottom:20px;">
+                    <button class="btn btn-primary" onclick="showOrderType('regular')">Regular Orders</button>
+                    <button class="btn btn-success" onclick="showOrderType('advance')">Advance Orders</button>
+                    <button class="btn btn-warning" onclick="showOrderType('vyaj')">Vyaj Orders</button>
+                </div>
+
+                <!-- Regular Order -->
+                <div id="regularOrder" class="order-type">
+                    <h3 style="color:#4299e1;margin-bottom:20px;">Regular Orders</h3>
+                    <form id="regularOrderForm" onsubmit="handleRegularOrderSubmit(event)">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Order ID*</label>
+                                <input type="text" id="orderID" required disabled>
+                            </div>
+                            <div class="form-group">
+                                <label>Customer*</label>
+                                <select id="orderCustomerID" required>
+                                    <option value="">Select Customer</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Employee*</label>
+                                <select id="orderEmployeeID" required>
+                                    <option value="">Select Employee</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Order Date*</label>
+                                <input type="date" id="orderDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Total Weight (grams)*</label>
+                                <input type="number" step="0.01" id="orderWeight" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Total Amount*</label>
+                                <input type="number" step="0.01" id="orderAmount" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Payment Method*</label>
+                                <select id="orderPaymentMethod" required>
+                                    <option value="">Select Method</option>
+                                    <option value="Cash">Cash</option>
+                                    <option value="Card">Card</option>
+                                    <option value="UPI">UPI</option>
+                                    <option value="Online">Online</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Status*</label>
+                                <select id="orderStatus" required>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Completed">Completed</option>
+                                    <option value="Cancelled">Cancelled</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="regularOrderSubmitBtn">Add Order</button>
+                        <button type="button" class="btn btn-warning" onclick="cancelEdit('regularOrder')">Cancel</button>
+                    </form>
+
+                    <div class="table-container">
+                        <table id="regularOrderTable">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Customer</th>
+                                    <th>Employee</th>
+                                    <th>Order Date</th>
+                                    <th>Weight(g)</th>
+                                    <th>Amount</th>
+                                    <th>Payment Method</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Advance Order -->
+                <div id="advanceOrder" class="order-type" style="display:none;">
+                    <h3 style="color:#4299e1;margin-bottom:20px;">Advance Orders</h3>
+                    <form id="advanceOrderForm" onsubmit="handleAdvanceOrderSubmit(event)">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Advance Order ID*</label>
+                                <input type="text" id="advanceOrderID" required disabled>
+                            </div>
+                            <div class="form-group">
+                                <label>Customer*</label>
+                                <select id="advanceCustomerID" required>
+                                    <option value="">Select Customer</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Employee*</label>
+                                <select id="advanceEmployeeID" required>
+                                    <option value="">Select Employee</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Order Date*</label>
+                                <input type="date" id="advanceOrderDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Expected Delivery*</label>
+                                <input type="date" id="advanceDeliveryDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Total Weight (grams)*</label>
+                                <input type="number" step="0.01" id="advanceWeight" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Total Amount*</label>
+                                <input type="number" step="0.01" id="advanceAmount" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Advance Paid*</label>
+                                <input type="number" step="0.01" id="advancePaid" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Payment Method*</label>
+                                <select id="advancePaymentMethod" required>
+                                    <option value="">Select Method</option>
+                                    <option value="Cash">Cash</option>
+                                    <option value="Card">Card</option>
+                                    <option value="UPI">UPI</option>
+                                    <option value="Online">Online</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Status*</label>
+                                <select id="advanceStatus" required>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Pending Delivery">Pending Delivery</option>
+                                    <option value="Completed">Completed</option>
+                                    <option value="Cancelled">Cancelled</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success" id="advanceOrderSubmitBtn">Add Advance Order</button>
+                        <button type="button" class="btn btn-warning" onclick="cancelEdit('advanceOrder')">Cancel</button>
+                    </form>
+
+                    <div class="table-container">
+                        <table id="advanceOrderTable">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Customer</th>
+                                    <th>Employee</th>
+                                    <th>Order Date</th>
+                                    <th>Expected Delivery</th>
+                                    <th>Weight(g)</th>
+                                    <th>Amount</th>
+                                    <th>Advance Paid</th>
+                                    <th>Payment Method</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Vyaj Order -->
+                <div id="vyajOrder" class="order-type" style="display:none;">
+                    <h3 style="color:#4299e1;margin-bottom:20px;">Vyaj Orders</h3>
+                    <form id="vyajOrderForm" onsubmit="handleVyajOrderSubmit(event)">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Vyaj Order ID*</label>
+                                <input type="text" id="vyajOrderID" required disabled>
+                            </div>
+                            <div class="form-group">
+                                <label>Customer*</label>
+                                <select id="vyajCustomerID" required>
+                                    <option value="">Select Customer</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Employee*</label>
+                                <select id="vyajEmployeeID" required>
+                                    <option value="">Select Employee</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Order Date*</label>
+                                <input type="date" id="vyajOrderDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Due Date*</label>
+                                <input type="date" id="vyajDueDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Total Weight (grams)*</label>
+                                <input type="number" step="0.01" id="vyajWeight" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Base Amount*</label>
+                                <input type="number" step="0.01" id="vyajBaseAmount" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Vyaj Rate (%)*</label>
+                                <input type="number" step="0.01" id="vyajRate" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Vyaj Amount*</label>
+                                <input type="number" step="0.01" id="vyajAmount" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Month 1 Payment</label>
+                                <input type="number" step="0.01" id="vyajMonth1" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Month 2 Payment</label>
+                                <input type="number" step="0.01" id="vyajMonth2" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Month 3 Payment</label>
+                                <input type="number" step="0.01" id="vyajMonth3" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Total Price*</label>
+                                <input type="number" step="0.01" id="vyajTotalPrice" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Paid Amount*</label>
+                                <input type="number" step="0.01" id="vyajPaidAmount" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Payment Status*</label>
+                                <select id="vyajPaymentStatus" required>
+                                    <option value="Unpaid">Unpaid</option>
+                                    <option value="Partially Paid">Partially Paid</option>
+                                    <option value="Paid">Paid</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-warning" id="vyajOrderSubmitBtn">Add Vyaj Order</button>
+                        <button type="button" class="btn btn-danger" onclick="cancelEdit('vyajOrder')">Cancel</button>
+                    </form>
+
+                    <div class="table-container">
+                        <table id="vyajOrderTable">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Customer</th>
+                                    <th>Order Date</th>
+                                    <th>Due Date</th>
+                                    <th>Weight(g)</th>
+                                    <th>Base Amount</th>
+                                    <th>Vyaj Rate</th>
+                                    <th>Total Price</th>
+                                    <th>Paid Amount</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gold Sale Module -->
+            <div id="goldsale" class="module">
+                <h2>Gold Sold by Customer</h2>
+                <div class="alert alert-success" id="goldsaleAlert"></div>
+                
+                <form id="goldsaleForm" onsubmit="handleGoldsaleSubmit(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Gold Sale ID*</label>
+                            <input type="text" id="goldSaleID" required disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Customer*</label>
+                            <select id="goldCustomerID" required>
+                                <option value="">Select Customer</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Product*</label>
+                            <select id="goldProductID" required>
+                                <option value="">Select Product</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Quantity (grams)*</label>
+                            <input type="number" step="0.01" id="goldQuantity" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Purity (Karat)*</label>
+                            <select id="goldPurity" required>
+                                <option value="18">18K</option>
+                                <option value="22">22K</option>
+                                <option value="24">24K</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Getting Date*</label>
+                            <input type="date" id="goldGettingDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Total Amount*</label>
+                            <input type="number" step="0.01" id="goldTotalAmount" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Payment to Customer*</label>
+                            <input type="number" step="0.01" id="goldPaymentCustomer" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Payment Method*</label>
+                            <select id="goldPaymentMethod" required>
+                                <option value="">Select Method</option>
+                                <option value="Cash">Cash</option>
+                                <option value="Card">Card</option>
+                                <option value="UPI">UPI</option>
+                                <option value="Online">Online</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="goldsaleSubmitBtn">Add Gold Sale</button>
+                    <button type="button" class="btn btn-warning" onclick="cancelEdit('goldsale')">Cancel</button>
+                </form>
+
+                <div class="table-container">
+                    <table id="goldsaleTable">
+                        <thead>
+                            <tr>
+                                <th>Sale ID</th>
+                                <th>Customer</th>
+                                <th>Product</th>
+                                <th>Quantity(g)</th>
+                                <th>Purity</th>
+                                <th>Getting Date</th>
+                                <th>Total Amount</th>
+                                <th>Payment to Customer</th>
+                                <th>Payment Method</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data storage with sample data
+        let customers = [
+            {id: 'CUS0001', name: 'Rajesh Kumar', phone: '9876543210', email: 'rajesh@email.com', address: 'Mumbai, Maharashtra', createdAt: '2024-01-15'},
+            {id: 'CUS0002', name: 'Priya Sharma', phone: '9876543211', email: 'priya@email.com', address: 'Delhi, India', createdAt: '2024-02-20'},
+            {id: 'CUS0003', name: 'Amit Patel', phone: '9876543212', email: 'amit@email.com', address: 'Gujarat, India', createdAt: '2024-03-10'}
+        ];
+        
+        let employees = [
+            {id: 'EMP0001', name: 'Suresh Verma', role: 'Manager', hireDate: '2023-01-10', salary: '50000', phone: '9123456780', email: 'suresh@goldshop.com'},
+            {id: 'EMP0002', name: 'Kavita Singh', role: 'Salesperson', hireDate: '2023-06-15', salary: '30000', phone: '9123456781', email: 'kavita@goldshop.com'},
+            {id: 'EMP0003', name: 'Rahul Gupta', role: 'Cashier', hireDate: '2023-09-01', salary: '25000', phone: '9123456782', email: 'rahul@goldshop.com'}
+        ];
+        
+        let suppliers = [
+            {id: 'SUP0001', name: 'Golden Suppliers Ltd', contact: 'Mr. Mehta', phone: '9988776655', email: 'golden@supplier.com', address: 'Zaveri Bazaar, Mumbai', status: 'Active'},
+            {id: 'SUP0002', name: 'Royal Gold Imports', contact: 'Ms. Reddy', phone: '9988776656', email: 'royal@supplier.com', address: 'Karol Bagh, Delhi', status: 'Active'},
+            {id: 'SUP0003', name: 'Premium Jewels Co', contact: 'Mr. Shah', phone: '9988776657', email: 'premium@supplier.com', address: 'Surat, Gujarat', status: 'Inactive'}
+        ];
+        
+        let products = [
+            {id: 'PRD0001', name: 'Gold Necklace Set', category: 'Necklace', weight: '45.50', purity: '22', purchasePrice: '5800', stock: '15'},
+            {id: 'PRD0002', name: 'Diamond Ring', category: 'Ring', weight: '8.20', purity: '18', purchasePrice: '6500', stock: '25'},
+            {id: 'PRD0003', name: 'Gold Chain', category: 'Chain', weight: '25.00', purity: '22', purchasePrice: '5900', stock: '30'},
+            {id: 'PRD0004', name: 'Pearl Earrings', category: 'Earring', weight: '12.50', purity: '18', purchasePrice: '5500', stock: '20'}
+        ];
+        
+        let inventory = [
+            {id: 'INV0001', productId: 'PRD0001', supplierId: 'SUP0001', quantity: '500.00', availableStock: '450.00', lastUpdated: '2024-10-20T10:30'},
+            {id: 'INV0002', productId: 'PRD0002', supplierId: 'SUP0002', quantity: '200.00', availableStock: '180.00', lastUpdated: '2024-10-21T14:15'},
+            {id: 'INV0003', productId: 'PRD0003', supplierId: 'SUP0001', quantity: '750.00', availableStock: '700.00', lastUpdated: '2024-10-22T09:45'}
+        ];
+        
+        let bills = [
+            {
+                id: 'BIL0001',
+                customerId: 'CUS0001',
+                employeeId: 'EMP0002',
+                date: '2024-10-15',
+                items: [
+                    {
+                        productId: 'PRD0001',
+                        productName: 'Gold Necklace Set (PRD0001)',
+                        weight: '45.50',
+                        purity: '22K',
+                        goldPrice: '5800',
+                        makingCharges: '400',
+                        itemTotal: '282100.00'
+                    }
+                ],
+                subtotal: '282100.00',
+                gst: '8463.00',
+                discount: '5000.00',
+                netPayable: '285563.00',
+                paymentMethod: 'Card'
+            },
+            {
+                id: 'BIL0002',
+                customerId: 'CUS0002',
+                employeeId: 'EMP0002',
+                date: '2024-10-18',
+                items: [
+                    {
+                        productId: 'PRD0002',
+                        productName: 'Diamond Ring (PRD0002)',
+                        weight: '8.20',
+                        purity: '18K',
+                        goldPrice: '6500',
+                        makingCharges: '800',
+                        itemTotal: '59860.00'
+                    },
+                    {
+                        productId: 'PRD0003',
+                        productName: 'Gold Chain (PRD0003)',
+                        weight: '25.00',
+                        purity: '22K',
+                        goldPrice: '5900',
+                        makingCharges: '350',
+                        itemTotal: '156250.00'
+                    }
+                ],
+                subtotal: '216110.00',
+                gst: '6483.30',
+                discount: '2000.00',
+                netPayable: '220593.30',
+                paymentMethod: 'UPI'
+            },
+            {
+                id: 'BIL0003',
+                customerId: 'CUS0003',
+                employeeId: 'EMP0001',
+                date: '2024-10-22',
+                items: [
+                    {
+                        productId: 'PRD0004',
+                        productName: 'Pearl Earrings (PRD0004)',
+                        weight: '12.50',
+                        purity: '18K',
+                        goldPrice: '5500',
+                        makingCharges: '600',
+                        itemTotal: '76250.00'
+                    }
+                ],
+                subtotal: '76250.00',
+                gst: '2287.50',
+                discount: '1000.00',
+                netPayable: '77537.50',
+                paymentMethod: 'Cash'
+            }
+        ];
+        
+        let regularOrders = [
+            {id: 'ORD0001', customerId: 'CUS0001', employeeId: 'EMP0002', date: '2024-10-10', weight: '45.50', amount: '280000', paymentMethod: 'Cash', status: 'Completed'},
+            {id: 'ORD0002', customerId: 'CUS0003', employeeId: 'EMP0002', date: '2024-10-20', weight: '30.00', amount: '185000', paymentMethod: 'UPI', status: 'Pending'}
+        ];
+        
+        let advanceOrders = [
+            {id: 'ADV0001', customerId: 'CUS0002', employeeId: 'EMP0002', date: '2024-10-12', deliveryDate: '2024-11-15', weight: '50.00', amount: '320000', advancePaid: '100000', paymentMethod: 'Card', status: 'Pending Delivery'}
+        ];
+        
+        let vyajOrders = [
+            {id: 'VYJ0001', customerId: 'CUS0001', employeeId: 'EMP0002', date: '2024-09-01', dueDate: '2024-12-01', weight: '60.00', baseAmount: '350000', rate: '2.5', vyajAmount: '26250', month1: '8750', month2: '8750', month3: '8750', totalPrice: '376250', paidAmount: '26250', status: 'Partially Paid'}
+        ];
+        
+        let goldSales = [
+            {id: 'GLS0001', customerId: 'CUS0003', productId: 'PRD0003', quantity: '35.00', purity: '22', gettingDate: '2024-10-05', totalAmount: '210000', paymentCustomer: '205000', paymentMethod: 'Cash'}
+        ];
+
+        // Edit mode tracking
+        let editMode = {
+            customer: null,
+            employee: null,
+            supplier: null,
+            product: null,
+            inventory: null,
+            bills: null,
+            regularOrder: null,
+            advanceOrder: null,
+            vyajOrder: null,
+            goldsale: null
+        };
+
+        // Auto ID generation
+        function generateID(prefix, dataArray) {
+            const maxId = dataArray.length > 0 ? 
+                Math.max(...dataArray.map(item => parseInt(item.id.replace(prefix, '')))) : 0;
+            return prefix + String(maxId + 1).padStart(4, '0');
+        }
+
+        // Module navigation
+        function showModule(moduleName) {
+            const modules = document.querySelectorAll('.module');
+            const tabs = document.querySelectorAll('.nav-tabs button');
+            
+            modules.forEach(m => m.classList.remove('active'));
+            tabs.forEach(t => t.classList.remove('active'));
+            
+            document.getElementById(moduleName).classList.add('active');
+            event.target.classList.add('active');
+
+            // Update dropdowns when switching modules
+            updateAllDropdowns();
+            
+            // Set auto ID for the active module
+            setAutoID(moduleName);
+        }
+
+        // Order type navigation
+        function showOrderType(type) {
+            document.getElementById('regularOrder').style.display = type === 'regular' ? 'block' : 'none';
+            document.getElementById('advanceOrder').style.display = type === 'advance' ? 'block' : 'none';
+            document.getElementById('vyajOrder').style.display = type === 'vyaj' ? 'block' : 'none';
+            
+            updateAllDropdowns();
+            if (type === 'regular') setAutoID('regularOrder');
+            if (type === 'advance') setAutoID('advanceOrder');
+            if (type === 'vyaj') setAutoID('vyajOrder');
+        }
+
+        // Set auto-generated ID
+        function setAutoID(module) {
+            if (editMode[module] !== null) return;
+            
+            switch(module) {
+                case 'customer':
+                    document.getElementById('customerID').value = generateID('CUS', customers);
+                    break;
+                case 'employee':
+                    document.getElementById('employeeID').value = generateID('EMP', employees);
+                    break;
+                case 'supplier':
+                    document.getElementById('supplierID').value = generateID('SUP', suppliers);
+                    break;
+                case 'product':
+                    document.getElementById('productID').value = generateID('PRD', products);
+                    break;
+                case 'inventory':
+                    document.getElementById('inventoryID').value = generateID('INV', inventory);
+                    break;
+                case 'bills':
+                    document.getElementById('billID').value = generateID('BIL', bills);
+                    break;
+                case 'regularOrder':
+                    document.getElementById('orderID').value = generateID('ORD', regularOrders);
+                    break;
+                case 'advanceOrder':
+                    document.getElementById('advanceOrderID').value = generateID('ADV', advanceOrders);
+                    break;
+                case 'vyajOrder':
+                    document.getElementById('vyajOrderID').value = generateID('VYJ', vyajOrders);
+                    break;
+                case 'goldsale':
+                    document.getElementById('goldSaleID').value = generateID('GLS', goldSales);
+                    break;
+            }
+        }
+
+        // Alert function
+        function showAlert(moduleId, message, type = 'success') {
+            const alert = document.getElementById(moduleId + 'Alert');
+            alert.className = 'alert alert-' + type + ' show';
+            alert.textContent = message;
+            setTimeout(() => alert.classList.remove('show'), 3000);
+        }
+
+        // Cancel edit
+        function cancelEdit(module) {
+            editMode[module] = null;
+            const formId = module === 'regularOrder' ? 'regularOrderForm' : 
+                          module === 'advanceOrder' ? 'advanceOrderForm' :
+                          module === 'vyajOrder' ? 'vyajOrderForm' : module + 'Form';
+            document.getElementById(formId).reset();
+            
+            const submitBtn = document.getElementById(module + 'SubmitBtn') || 
+                            document.getElementById(module.replace('Order', 'Order') + 'SubmitBtn');
+            if (submitBtn) {
+                if (module === 'advanceOrder') submitBtn.textContent = 'Add Advance Order';
+                else if (module === 'vyajOrder') submitBtn.textContent = 'Add Vyaj Order';
+                else if (module === 'regularOrder') submitBtn.textContent = 'Add Order';
+                else if (module === 'bills') submitBtn.textContent = 'Generate Bill';
+                else if (module === 'goldsale') submitBtn.textContent = 'Add Gold Sale';
+                else submitBtn.textContent = 'Add ' + module.charAt(0).toUpperCase() + module.slice(1);
+            }
+            
+            setAutoID(module);
+        }
+
+        // Update all dropdowns
+        function updateAllDropdowns() {
+            updateCustomerDropdowns();
+            updateEmployeeDropdowns();
+            updateProductDropdowns();
+            updateSupplierDropdowns();
+        }
+
+        // Update customer dropdowns
+        function updateCustomerDropdowns() {
+            const dropdowns = ['billCustomerID', 'orderCustomerID', 'advanceCustomerID', 'vyajCustomerID', 'goldCustomerID'];
+            dropdowns.forEach(id => {
+                const select = document.getElementById(id);
+                if (select) {
+                    const currentValue = select.value;
+                    select.innerHTML = '<option value="">Select Customer</option>' + 
+                        customers.map(c => `<option value="${c.id}">${c.name} (${c.id})</option>`).join('');
+                    select.value = currentValue;
+                }
+            });
+        }
+
+        // Update employee dropdowns
+        function updateEmployeeDropdowns() {
+            const dropdowns = ['billEmployeeID', 'orderEmployeeID', 'advanceEmployeeID', 'vyajEmployeeID'];
+            dropdowns.forEach(id => {
+                const select = document.getElementById(id);
+                if (select) {
+                    const currentValue = select.value;
+                    select.innerHTML = '<option value="">Select Employee</option>' + 
+                        employees.map(e => `<option value="${e.id}">${e.name} (${e.id})</option>`).join('');
+                    select.value = currentValue;
+                }
+            });
+        }
+
+        // Update product dropdowns
+        function updateProductDropdowns() {
+            const dropdowns = ['inventoryProductID', 'goldProductID'];
+            dropdowns.forEach(id => {
+                const select = document.getElementById(id);
+                if (select) {
+                    const currentValue = select.value;
+                    select.innerHTML = '<option value="">Select Product</option>' + 
+                        products.map(p => `<option value="${p.id}">${p.name} (${p.id})</option>`).join('');
+                    select.value = currentValue;
+                }
+            });
+            
+            // Update bill product dropdowns
+            document.querySelectorAll('.billProduct').forEach(select => {
+                const currentValue = select.value;
+                select.innerHTML = '<option value="">Select Product</option>' + 
+                    products.map(p => `<option value="${p.id}">${p.name} (${p.id})</option>`).join('');
+                select.value = currentValue;
+            });
+        }
+
+        // Update supplier dropdowns
+        function updateSupplierDropdowns() {
+            const select = document.getElementById('inventorySupplierID');
+            if (select) {
+                const currentValue = select.value;
+                select.innerHTML = '<option value="">Select Supplier</option>' + 
+                    suppliers.map(s => `<option value="${s.id}">${s.name} (${s.id})</option>`).join('');
+                select.value = currentValue;
+            }
+        }
+
+        // Get name by ID
+        function getCustomerName(id) {
+            const customer = customers.find(c => c.id === id);
+            return customer ? customer.name : id;
+        }
+
+        function getEmployeeName(id) {
+            const employee = employees.find(e => e.id === id);
+            return employee ? employee.name : id;
+        }
+
+        function getProductName(id) {
+            const product = products.find(p => p.id === id);
+            return product ? product.name : id;
+        }
+
+        function getSupplierName(id) {
+            const supplier = suppliers.find(s => s.id === id);
+            return supplier ? supplier.name : id;
+        }
+
+        // Customer functions
+        function handleCustomerSubmit(e) {
+            e.preventDefault();
+            const customer = {
+                id: document.getElementById('customerID').value,
+                name: document.getElementById('customerName').value,
+                phone: document.getElementById('customerPhone').value,
+                email: document.getElementById('customerEmail').value,
+                address: document.getElementById('customerAddress').value,
+                createdAt: new Date().toISOString().split('T')[0]
+            };
+            
+            if (editMode.customer !== null) {
+                customers[editMode.customer] = customer;
+                showAlert('customer', 'Customer updated successfully!');
+                editMode.customer = null;
+            } else {
+                customers.push(customer);
+                showAlert('customer', 'Customer added successfully!');
+            }
+            
+            renderCustomerTable();
+            updateCustomerDropdowns();
+            cancelEdit('customer');
+        }
+
+        function renderCustomerTable() {
+            const tbody = document.querySelector('#customerTable tbody');
+            tbody.innerHTML = customers.map((c, i) => `
+                <tr>
+                    <td>${c.id}</td>
+                    <td>${c.name}</td>
+                    <td>${c.phone}</td>
+                    <td>${c.email}</td>
+                    <td>${c.address}</td>
+                    <td>${c.createdAt}</td>
+                    <td>
+                        <button class="action-btn edit-btn" onclick="editCustomer(${i})">Edit</button>
+                        <button class="action-btn delete-btn" onclick="deleteCustomer(${i})">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function editCustomer(index) {
+            const c = customers[index];
+            document.getElementById('customerID').value = c.id;
+            document.getElementById('customerName').value = c.name;
+            document.getElementById('customerPhone').value = c.phone;
+            document.getElementById('customerEmail').value = c.email;
+            document.getElementById('customerAddress').value = c.address;
+            
+            editMode.customer = index;
+            document.getElementById('customerSubmitBtn').textContent = 'Update Customer';
+            window.scrollTo(0, 0);
+        }
+
+        function deleteCustomer(index) {
+            if(confirm('Are you sure you want to delete this customer?')) {
+                customers.splice(index, 1);
+                renderCustomerTable();
+                updateCustomerDropdowns();
+                showAlert('customer', 'Customer deleted successfully!');
+            }
+        }
+
+        // Employee functions
+        function handleEmployeeSubmit(e) {
+            e.preventDefault();
+            const employee = {
+                id: document.getElementById('employeeID').value,
+                name: document.getElementById('employeeName').value,
+                role: document.getElementById('employeeRole').value,
+                hireDate: document.getElementById('employeeHireDate').value,
+                salary: document.getElementById('employeeSalary').value,
+                phone: document.getElementById('employeePhone').value,
+                email: document.getElementById('employeeEmail').value
+            };
+            
+            if (editMode.employee !== null) {
+                employees[editMode.employee] = employee;
+                showAlert('employee', 'Employee updated successfully!');
+                editMode.employee = null;
+            } else {
+                employees.push(employee);
+                showAlert('employee', 'Employee added successfully!');
+            }
+            
+            renderEmployeeTable();
+            updateEmployeeDropdowns();
+            cancelEdit('employee');
+        }
+
+        function renderEmployeeTable() {
+            const tbody = document.querySelector('#employeeTable tbody');
+            tbody.innerHTML = employees.map((e, i) => `
+                <tr>
+                    <td>${e.id}</td>
+                    <td>${e.name}</td>
+                    <td>${e.role}</td>
+                    <td>${e.hireDate}</td>
+                    <td>₹${e.salary}</td>
+                    <td>${e.phone}</td>
+                    <td>${e.email}</td>
+                    <td>
+                        <button class="action-btn edit-btn" onclick="editEmployee(${i})">Edit</button>
+                        <button class="action-btn delete-btn" onclick="deleteEmployee(${i})">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function editEmployee(index) {
+            const e = employees[index];
+            document.getElementById('employeeID').value = e.id;
+            document.getElementById('employeeName').value = e.name;
+            document.getElementById('employeeRole').value = e.role;
+            document.getElementById('employeeHireDate').value = e.hireDate;
+            document.getElementById('employeeSalary').value = e.salary;
+            document.getElementById('employeePhone').value = e.phone;
+            document.getElementById('employeeEmail').value = e.email;
+            
+            editMode.employee = index;
+            document.getElementById('employeeSubmitBtn').textContent = 'Update Employee';
+            window.scrollTo(0, 0);
+        }
+
+        function deleteEmployee(index) {
+            if(confirm('Are you sure you want to delete this employee?')) {
+                employees.splice(index, 1);
+                renderEmployeeTable();
+                updateEmployeeDropdowns();
+                showAlert('employee', 'Employee deleted successfully!');
+            }
+        }
+
+        // Supplier functions
+        function handleSupplierSubmit(e) {
+            e.preventDefault();
+            const supplier = {
+                id: document.getElementById('supplierID').value,
+                name: document.getElementById('supplierName').value,
+                contact: document.getElementById('supplierContact').value,
+                phone: document.getElementById('supplierPhone').value,
+                email: document.getElementById('supplierEmail').value,
+                address: document.getElementById('supplierAddress').value,
+                status: document.getElementById('supplierStatus').value
+            };
+            
+            if (editMode.supplier !== null) {
+                suppliers[editMode.supplier] = supplier;
+                showAlert('supplier', 'Supplier updated successfully!');
+                editMode.supplier = null;
+            } else {
+                suppliers.push(supplier);
+                showAlert('supplier', 'Supplier added successfully!');
+            }
+            
+            renderSupplierTable();
+            updateSupplierDropdowns();
+            cancelEdit('supplier');
+        }
+
+        function renderSupplierTable() {
+            const tbody = document.querySelector('#supplierTable tbody');
+            tbody.innerHTML = suppliers.map((s, i) => `
+                <tr>
+                    <td>${s.id}</td>
+                    <td>${s.name}</td>
+                    <td>${s.contact}</td>
+                    <td>${s.phone}</td>
+                    <td>${s.email}</td>
+                    <td>${s.address}</td>
+                    <td>${s.status}</td>
+                    <td>
+                        <button class="action-btn edit-btn" onclick="editSupplier(${i})">Edit</button>
+                        <button class="action-btn delete-btn" onclick="deleteSupplier(${i})">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function editSupplier(index) {
+            const s = suppliers[index];
+            document.getElementById('supplierID').value = s.id;
+            document.getElementById('supplierName').value = s.name;
+            document.getElementById('supplierContact').value = s.contact;
+            document.getElementById('supplierPhone').value = s.phone;
+            document.getElementById('supplierEmail').value = s.email;
+            document.getElementById('supplierAddress').value = s.address;
+            document.getElementById('supplierStatus').value = s.status;
+            
+            editMode.supplier = index;
+            document.getElementById('supplierSubmitBtn').textContent = 'Update Supplier';
+            window.scrollTo(0, 0);
+        }
+
+        function deleteSupplier(index) {
+            if(confirm('Are you sure you want to delete this supplier?')) {
+                suppliers.splice(index, 1);
+                renderSupplierTable();
+                updateSupplierDropdowns();
+                showAlert('supplier', 'Supplier deleted successfully!');
+            }
+        }
+
+        // Product functions
+        function handleProductSubmit(e) {
+            e.preventDefault();
+            const product = {
+                id: document.getElementById('productID').value,
+                name: document.getElementById('productName').value,
+                category: document.getElementById('productCategory').value,
+                weight: document.getElementById('productWeight').value,
+                purity: document.getElementById('productPurity').value,
+                purchasePrice: document.getElementById('productPurchasePrice').value,
+                stock: document.getElementById('productStock').value
+            };
+            
+            if (editMode.product !== null) {
+                products[editMode.product] = product;
+                showAlert('product', 'Product updated successfully!');
+                editMode.product = null;
+            } else {
+                products.push(product);
+                showAlert('product', 'Product added successfully!');
+            }
+            
+            renderProductTable();
+            updateProductDropdowns();
+            cancelEdit('product');
+        }
+
+        function renderProductTable() {
+            const tbody = document.querySelector('#productTable tbody');
+            tbody.innerHTML = products.map((p, i) => `
+                <tr>
+                    <td>${p.id}</td>
+                    <td>${p.name}</td>
+                    <td>${p.category}</td>
+                    <td>${p.weight}</td>
+                    <td>${p.purity}K</td>
+                    <td>₹${p.purchasePrice}</td>
+                    <td>${p.stock}</td>
+                    <td>
+                        <button class="action-btn edit-btn" onclick="editProduct(${i})">Edit</button>
+                        <button class="action-btn delete-btn" onclick="deleteProduct(${i})">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function editProduct(index) {
+            const p = products[index];
+            document.getElementById('productID').value = p.id;
+            document.getElementById('productName').value = p.name;
+            document.getElementById('productCategory').value = p.category;
+            document.getElementById('productWeight').value = p.weight;
+            document.getElementById('productPurity').value = p.purity;
+            document.getElementById('productPurchasePrice').value = p.purchasePrice;
+            document.getElementById('productStock').value = p.stock;
+            
+            editMode.product = index;
+            document.getElementById('productSubmitBtn').textContent = 'Update Product';
+            window.scrollTo(0, 0);
+        }
+
+        function deleteProduct(index) {
+            if(confirm('Are you sure you want to delete this product?')) {
+                products.splice(index, 1);
+                renderProductTable();
+                updateProductDropdowns();
+                showAlert('product', 'Product deleted successfully!');
+            }
+        }
+
+        // Inventory functions
+        function handleInventorySubmit(e) {
+            e.preventDefault();
+            const inv = {
+                id: document.getElementById('inventoryID').value,
+                productId: document.getElementById('inventoryProductID').value,
+                supplierId: document.getElementById('inventorySupplierID').value,
+                quantity: document.getElementById('inventoryQuantity').value,
+                availableStock: document.getElementById('inventoryAvailableStock').value,
+                lastUpdated: document.getElementById('inventoryLastUpdated').value
+            };
+            
+            if (editMode.inventory !== null) {
+                inventory[editMode.inventory] = inv;
+                showAlert('inventory', 'Inventory updated successfully!');
+                editMode.inventory = null;
+            } else {
+                inventory.push(inv);
+                showAlert('inventory', 'Inventory added successfully!');
+            }
+            
+            renderInventoryTable();
+            cancelEdit('inventory');
+        }
+
+        function renderInventoryTable() {
+            const tbody = document.querySelector('#inventoryTable tbody');
+            tbody.innerHTML = inventory.map((inv, i) => `
+                <tr>
+                    <td>${inv.id}</td>
+                    <td>${getProductName(inv.productId)}</td>
+                    <td>${getSupplierName(inv.supplierId)}</td>
+                    <td>${inv.quantity}</td>
+                    <td>${inv.availableStock}</td>
+                    <td>${inv.lastUpdated}</td>
+                    <td>
+                        <button class="action-btn edit-btn" onclick="editInventory(${i})">Edit</button>
+                        <button class="action-btn delete-btn" onclick="deleteInventory(${i})">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function editInventory(index) {
+            const inv = inventory[index];
+            document.getElementById('inventoryID').value = inv.id;
+            document.getElementById('inventoryProductID').value = inv.productId;
+            document.getElementById('inventorySupplierID').value = inv.supplierId;
+            document.getElementById('inventoryQuantity').value = inv.quantity;
+            document.getElementById('inventoryAvailableStock').value = inv.availableStock;
+            document.getElementById('inventoryLastUpdated').value = inv.lastUpdated;
+            
+            editMode.inventory = index;
+            document.getElementById('inventorySubmitBtn').textContent = 'Update Inventory';
+            window.scrollTo(0, 0);
+        }
+
+        function deleteInventory(index) {
+            if(confirm('Are you sure you want to delete this inventory?')) {
+                inventory.splice(index, 1);
+                renderInventoryTable();
+                showAlert('inventory', 'Inventory deleted successfully!');
+            }
+        }
+
+        // Bills functions
+        function showBillForm() {
+            document.getElementById('billFormSection').style.display = 'block';
+            setAutoID('bills');
+            document.getElementById('billDate').valueAsDate = new Date();
+            updateProductDropdowns();
+        }
+
+        function hideBillForm() {
+            document.getElementById('billFormSection').style.display = 'none';
+            document.getElementById('billItemsSection').innerHTML = `
+                <div class="bill-item">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Select Product*</label>
+                            <select class="billProduct" onchange="updateProductDetails(this)" required>
+                                <option value="">Select Product</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Weight (grams)*</label>
+                            <input type="number" step="0.01" class="billWeight" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Purity*</label>
+                            <input type="text" class="billPurity" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Gold Price/gram*</label>
+                            <input type="number" step="0.01" class="billGoldPrice" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Making Charges/gram*</label>
+                            <input type="number" step="0.01" class="billMakingCharges" oninput="calculateItemTotal(this)" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Total Price*</label>
+                            <input type="number" step="0.01" class="billItemTotal" readonly>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-danger" onclick="removeBillItem(this)" style="margin-top:10px;">Remove Item</button>
+                </div>
+            `;
+            cancelEdit('bills');
+            updateProductDropdowns();
+        }
+
+        function addBillItem() {
+            const itemHTML = `
+                <div class="bill-item">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Select Product*</label>
+                            <select class="billProduct" onchange="updateProductDetails(this)" required>
+                                <option value="">Select Product</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Weight (grams)*</label>
+                            <input type="number" step="0.01" class="billWeight" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Purity*</label>
+                            <input type="text" class="billPurity" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Gold Price/gram*</label>
+                            <input type="number" step="0.01" class="billGoldPrice" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Making Charges/gram*</label>
+                            <input type="number" step="0.01" class="billMakingCharges" oninput="calculateItemTotal(this)" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Total Price*</label>
+                            <input type="number" step="0.01" class="billItemTotal" readonly>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-danger" onclick="removeBillItem(this)" style="margin-top:10px;">Remove Item</button>
+                </div>
+            `;
+            document.getElementById('billItemsSection').insertAdjacentHTML('beforeend', itemHTML);
+            updateProductDropdowns();
+        }
+
+        function removeBillItem(btn) {
+            const items = document.querySelectorAll('.bill-item');
+            if (items.length > 1) {
+                btn.parentElement.remove();
+                calculateBillTotal();
+            } else {
+                alert('At least one product is required!');
+            }
+        }
+
+        function updateProductDetails(select) {
+            const productId = select.value;
+            if (!productId) return;
+            
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            const item = select.closest('.bill-item');
+            item.querySelector('.billWeight').value = product.weight;
+            item.querySelector('.billPurity').value = product.purity + 'K';
+            item.querySelector('.billGoldPrice').value = product.purchasePrice;
+            item.querySelector('.billMakingCharges').value = '';
+            item.querySelector('.billItemTotal').value = '';
+        }
+
+        function calculateItemTotal(input) {
+            const item = input.closest('.bill-item');
+            const weight = parseFloat(item.querySelector('.billWeight').value) || 0;
+            const goldPrice = parseFloat(item.querySelector('.billGoldPrice').value) || 0;
+            const makingCharges = parseFloat(item.querySelector('.billMakingCharges').value) || 0;
+            
+            const total = weight * (goldPrice + makingCharges);
+            item.querySelector('.billItemTotal').value = total.toFixed(2);
+            
+            calculateBillTotal();
+        }
+
+        function calculateBillTotal() {
+            let subtotal = 0;
+            document.querySelectorAll('.bill-item').forEach(item => {
+                const itemTotal = parseFloat(item.querySelector('.billItemTotal').value) || 0;
+                subtotal += itemTotal;
+            });
+            
+            const gst = subtotal * 0.03;
+            const discount = parseFloat(document.getElementById('billDiscount').value) || 0;
+            const netPayable = subtotal + gst - discount;
+            
+            document.getElementById('billSubtotal').textContent = '₹' + subtotal.toFixed(2);
+            document.getElementById('billGST').textContent = '₹' + gst.toFixed(2);
+            document.getElementById('billNetPayable').textContent = '₹' + netPayable.toFixed(2);
+        }
+
+        function handleBillsSubmit(e) {
+            e.preventDefault();
+            
+            const items = [];
+            document.querySelectorAll('.bill-item').forEach(item => {
+                const productSelect = item.querySelector('.billProduct');
+                if (productSelect.value) {
+                    items.push({
+                        productId: productSelect.value,
+                        productName: productSelect.options[productSelect.selectedIndex].text,
+                        weight: item.querySelector('.billWeight').value,
+                        purity: item.querySelector('.billPurity').value,
+                        goldPrice: item.querySelector('.billGoldPrice').value,
+                        makingCharges: item.querySelector('.billMakingCharges').value,
+                        itemTotal: item.querySelector('.billItemTotal').value
+                    });
+                }
+            });
+            
+            if (items.length === 0) {
+                alert('Please add at least one product to the bill!');
+                return;
+            }
+            
+            const subtotal = parseFloat(document.getElementById('billSubtotal').textContent.replace('₹', ''));
+            const gst = parseFloat(document.getElementById('billGST').textContent.replace('₹', ''));
+            const discount = parseFloat(document.getElementById('billDiscount').value) || 0;
+            const netPayable = parseFloat(document.getElementById('billNetPayable').textContent.replace('₹', ''));
+            
+            const bill = {
+                id: document.getElementById('billID').value,
+                customerId: document.getElementById('billCustomerID').value,
+                employeeId: document.getElementById('billEmployeeID').value,
+                date: document.getElementById('billDate').value,
+                items: items,
+                subtotal: subtotal.toFixed(2),
+                gst: gst.toFixed(2),
+                discount: discount.toFixed(2),
+                netPayable: netPayable.toFixed(2),
+                paymentMethod: document.getElementById('billPaymentMethod').value
+            };
+            
+            if (editMode.bills !== null) {
+                bills[editMode.bills] = bill;
+                showAlert('bills', 'Bill updated successfully!');
+                editMode.bills = null;
+            } else {
+                bills.push(bill);
+                showAlert('bills', 'Bill generated successfully!');
+            }
+            
+            renderBillsTable();
+            hideBillForm();
+        }
+
+        function renderBillsTable() {
+            const tbody = document.querySelector('#billsTable tbody');
+            tbody.innerHTML = bills.map((b, i) => `
+                <tr>
+                    <td>${b.id}</td>
+                    <td>${getCustomerName(b.customerId)}</td>
+                    <td>${getEmployeeName(b.employeeId)}</td>
+                    <td>${b.date}</td>
+                    <td>₹${b.subtotal}</td>
+                    <td>₹${b.gst}</td>
+                    <td>₹${b.discount}</td>
+                    <td>₹${b.netPayable}</td>
+                    <td>${b.paymentMethod}</td>
+                    <td>
+                        <button class="action-btn" style="background:#22c55e;color:#fff" onclick="generateBillPDF(${i})">Print</button>
+                        <button class="action-btn edit-btn" onclick="editBill(${i})">Edit</button>
+                        <button class="action-btn delete-btn" onclick="deleteBill(${i})">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function generateBillPDF(index) {
+            const b = bills[index];
+            const customer = customers.find(c => c.id === b.customerId);
+            const employee = employees.find(e => e.id === b.employeeId);
+            
+            const printWindow = window.open('', '_blank');
+            
+            const itemsHTML = b.items.map(item => `
+                <tr>
+                    <td>${item.productName}</td>
+                    <td style="text-align:center;">${item.weight}g</td>
+                    <td style="text-align:center;">${item.purity}</td>
+                    <td style="text-align:right;">₹${parseFloat(item.goldPrice).toFixed(2)}</td>
+                    <td style="text-align:right;">₹${parseFloat(item.makingCharges).toFixed(2)}</td>
+                    <td style="text-align:right;">₹${parseFloat(item.itemTotal).toFixed(2)}</td>
+                </tr>
+            `).join('');
+            
+            const billHTML = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Bill - ${b.id}</title>
+                    <style>
+                        body {
+                            font-family: Arial, sans-serif;
+                            padding: 40px;
+                            max-width: 900px;
+                            margin: 0 auto;
+                        }
+                        .header {
+                            text-align: center;
+                            border-bottom: 3px solid #667eea;
+                            padding-bottom: 20px;
+                            margin-bottom: 30px;
+                        }
+                        .header h1 {
+                            color: #667eea;
+                            margin: 0 0 10px 0;
+                        }
+                        .header p {
+                            margin: 5px 0;
+                            color: #666;
+                        }
+                        .bill-info {
+                            display: grid;
+                            grid-template-columns: 1fr 1fr;
+                            gap: 30px;
+                            margin-bottom: 30px;
+                        }
+                        .info-section h3 {
+                            color: #667eea;
+                            margin-bottom: 10px;
+                            font-size: 14px;
+                            text-transform: uppercase;
+                        }
+                        .info-section p {
+                            margin: 5px 0;
+                            color: #333;
+                        }
+                        table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            margin: 20px 0;
+                        }
+                        th {
+                            background: #667eea;
+                            color: white;
+                            padding: 12px;
+                            text-align: left;
+                        }
+                        td {
+                            padding: 10px 12px;
+                            border-bottom: 1px solid #ddd;
+                        }
+                        .totals {
+                            margin-top: 30px;
+                            text-align: right;
+                        }
+                        .totals table {
+                            margin-left: auto;
+                            width: 350px;
+                        }
+                        .totals td {
+                            padding: 8px;
+                        }
+                        .totals .total-row {
+                            font-weight: bold;
+                            font-size: 18px;
+                            background: #f0f0f0;
+                        }
+                        .footer {
+                            margin-top: 50px;
+                            padding-top: 20px;
+                            border-top: 2px solid #ddd;
+                            text-align: center;
+                            color: #666;
+                        }
+                        .print-btn {
+                            background: #667eea;
+                            color: white;
+                            padding: 10px 30px;
+                            border: none;
+                            border-radius: 5px;
+                            cursor: pointer;
+                            font-size: 16px;
+                            margin: 20px 0;
+                        }
+                        @media print {
+                            .print-btn {
+                                display: none;
+                            }
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>🏆 GOLD SHOP</h1>
+                        <p>Complete Jewelry Business Management</p>
+                        <p>Phone: +91 98765 43210 | Email: info@goldshop.com</p>
+                    </div>
+
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <h2 style="color: #667eea; margin: 0;">INVOICE</h2>
+                        <p style="color: #666;">Bill ID: ${b.id}</p>
+                    </div>
+
+                    <div class="bill-info">
+                        <div class="info-section">
+                            <h3>Bill To:</h3>
+                            <p><strong>${customer ? customer.name : 'N/A'}</strong></p>
+                            <p>Customer ID: ${b.customerId}</p>
+                            <p>Phone: ${customer ? customer.phone : 'N/A'}</p>
+                            <p>Email: ${customer ? customer.email : 'N/A'}</p>
+                            <p>Address: ${customer ? customer.address : 'N/A'}</p>
+                        </div>
+                        <div class="info-section">
+                            <h3>Bill Details:</h3>
+                            <p><strong>Date:</strong> ${new Date(b.date).toLocaleDateString('en-IN')}</p>
+                            <p><strong>Employee:</strong> ${employee ? employee.name : 'N/A'}</p>
+                            <p><strong>Employee ID:</strong> ${b.employeeId}</p>
+                            <p><strong>Payment Method:</strong> ${b.paymentMethod}</p>
+                        </div>
+                    </div>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th style="text-align:center;">Weight</th>
+                                <th style="text-align:center;">Purity</th>
+                                <th style="text-align:right;">Gold Price/g</th>
+                                <th style="text-align:right;">Making/g</th>
+                                <th style="text-align:right;">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${itemsHTML}
+                        </tbody>
+                    </table>
+
+                    <div class="totals">
+                        <table>
+                            <tr>
+                                <td>Subtotal:</td>
+                                <td style="text-align: right;">₹${parseFloat(b.subtotal).toLocaleString('en-IN')}</td>
+                            </tr>
+                            <tr>
+                                <td>GST (3%):</td>
+                                <td style="text-align: right;">₹${parseFloat(b.gst).toLocaleString('en-IN')}</td>
+                            </tr>
+                            <tr>
+                                <td>Discount:</td>
+                                <td style="text-align: right;">- ₹${parseFloat(b.discount).toLocaleString('en-IN')}</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td>Net Payable:</td>
+                                <td style="text-align: right;">₹${parseFloat(b.netPayable).toLocaleString('en-IN')}</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="footer">
+                        <p><strong>Thank you for your business!</strong></p>
+                        <p>This is a computer generated invoice.</p>
+                        <p style="margin-top: 20px; font-size: 12px;">Terms & Conditions Apply | For any queries, please contact us.</p>
+                    </div>
+
+                    <div style="text-align: center;">
+                        <button class="print-btn" onclick="window.print()">Print Bill</button>
+                    </div>
+                </body>
+                </html>
+            `;
+            
+            printWindow.document.write(billHTML);
+            printWindow.document.close();
+        }
+
+        function deleteBill(index) {
+            if(confirm('Are you sure you want to delete this bill?')) {
+                bills.splice(index, 1);
+                renderBillsTable();
+                showAlert('bills', 'Bill deleted successfully!');
+            }
+        }
+
+        function editBill(index) {
+            const b = bills[index];
+            showBillForm();
+            
+            document.getElementById('billID').value = b.id;
+            document.getElementById('billCustomerID').value = b.customerId;
+            document.getElementById('billEmployeeID').value = b.employeeId;
+            document.getElementById('billDate').value = b.date;
+            document.getElementById('billPaymentMethod').value = b.paymentMethod;
+            document.getElementById('billDiscount').value = b.discount;
+            
+            // Clear existing items
+            document.getElementById('billItemsSection').innerHTML = '';
+            
+            // Add all items from the bill
+            b.items.forEach((item, idx) => {
+                const itemHTML = `
+                    <div class="bill-item">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Select Product*</label>
+                                <select class="billProduct" onchange="updateProductDetails(this)" required>
+                                    <option value="">Select Product</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Weight (grams)*</label>
+                                <input type="number" step="0.01" class="billWeight" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Purity*</label>
+                                <input type="text" class="billPurity" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Gold Price/gram*</label>
+                                <input type="number" step="0.01" class="billGoldPrice" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Making Charges/gram*</label>
+                                <input type="number" step="0.01" class="billMakingCharges" oninput="calculateItemTotal(this)" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Total Price*</label>
+                                <input type="number" step="0.01" class="billItemTotal" readonly>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-danger" onclick="removeBillItem(this)" style="margin-top:10px;">Remove Item</button>
+                    </div>
+                `;
+                document.getElementById('billItemsSection').insertAdjacentHTML('beforeend', itemHTML);
+            });
+            
+            // Update product dropdowns
+            updateProductDropdowns();
+            
+            // Set values for each item
+            const billItems = document.querySelectorAll('.bill-item');
+            b.items.forEach((item, idx) => {
+                if (billItems[idx]) {
+                    billItems[idx].querySelector('.billProduct').value = item.productId;
+                    billItems[idx].querySelector('.billWeight').value = item.weight;
+                    billItems[idx].querySelector('.billPurity').value = item.purity;
+                    billItems[idx].querySelector('.billGoldPrice').value = item.goldPrice;
+                    billItems[idx].querySelector('.billMakingCharges').value = item.makingCharges;
+                    billItems[idx].querySelector('.billItemTotal').value = item.itemTotal;
+                }
+            });
+            
+            // Calculate totals
+            calculateBillTotal();
+            
+            editMode.bills = index;
+            document.getElementById('billsSubmitBtn').textContent = 'Update Bill';
+            window.scrollTo(0, 0);
+        }
+
+        // Regular Order functions
+        function handleRegularOrderSubmit(e) {
+            e.preventDefault();
+            const order = {
+                id: document.getElementById('orderID').value,
+                customerId: document.getElementById('orderCustomerID').value,
+                employeeId: document.getElementById('orderEmployeeID').value,
+                date: document.getElementById('orderDate').value,
+                weight: document.getElementById('orderWeight').value,
+                amount: document.getElementById('orderAmount').value,
+                paymentMethod: document.getElementById('orderPaymentMethod').value,
+                status: document.getElementById('orderStatus').value
+            };
+            
+            if (editMode.regularOrder !== null) {
+                regularOrders[editMode.regularOrder] = order;
+                showAlert('order', 'Regular order updated successfully!');
+                editMode.regularOrder = null;
+            } else {
+                regularOrders.push(order);
+                showAlert('order', 'Regular order added successfully!');
+            }
+            
+            renderRegularOrderTable();
+            cancelEdit('regularOrder');
+        }
+
+        function renderRegularOrderTable() {
+            const tbody = document.querySelector('#regularOrderTable tbody');
+            tbody.innerHTML = regularOrders.map((o, i) => `
+                <tr>
+                    <td>${o.id}</td>
+                    <td>${getCustomerName(o.customerId)}</td>
+                    <td>${getEmployeeName(o.employeeId)}</td>
+                    <td>${o.date}</td>
+                    <td>${o.weight}</td>
+                    <td>₹${o.amount}</td>
+                    <td>${o.paymentMethod}</td>
+                    <td>${o.status}</td>
+                    <td>
+                        <button class="action-btn edit-btn" onclick="editRegularOrder(${i})">Edit</button>
+                        <button class="action-btn delete-btn" onclick="deleteRegularOrder(${i})">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function editRegularOrder(index) {
+            const o = regularOrders[index];
+            document.getElementById('orderID').value = o.id;
+            document.getElementById('orderCustomerID').value = o.customerId;
+            document.getElementById('orderEmployeeID').value = o.employeeId;
+            document.getElementById('orderDate').value = o.date;
+            document.getElementById('orderWeight').value = o.weight;
+            document.getElementById('orderAmount').value = o.amount;
+            document.getElementById('orderPaymentMethod').value = o.paymentMethod;
+            document.getElementById('orderStatus').value = o.status;
+            
+            editMode.regularOrder = index;
+            document.getElementById('regularOrderSubmitBtn').textContent = 'Update Order';
+            window.scrollTo(0, 0);
+        }
+
+        function deleteRegularOrder(index) {
+            if(confirm('Are you sure you want to delete this order?')) {
+                regularOrders.splice(index, 1);
+                renderRegularOrderTable();
+                showAlert('order', 'Order deleted successfully!');
+            }
+        }
+
+        // Advance Order functions
+        function handleAdvanceOrderSubmit(e) {
+            e.preventDefault();
+            const order = {
+                id: document.getElementById('advanceOrderID').value,
+                customerId: document.getElementById('advanceCustomerID').value,
+                employeeId: document.getElementById('advanceEmployeeID').value,
+                date: document.getElementById('advanceOrderDate').value,
+                deliveryDate: document.getElementById('advanceDeliveryDate').value,
+                weight: document.getElementById('advanceWeight').value,
+                amount: document.getElementById('advanceAmount').value,
+                advancePaid: document.getElementById('advancePaid').value,
+                paymentMethod: document.getElementById('advancePaymentMethod').value,
+                status: document.getElementById('advanceStatus').value
+            };
+            
+            if (editMode.advanceOrder !== null) {
+                advanceOrders[editMode.advanceOrder] = order;
+                showAlert('order', 'Advance order updated successfully!');
+                editMode.advanceOrder = null;
+            } else {
+                advanceOrders.push(order);
+                showAlert('order', 'Advance order added successfully!');
+            }
+            
+            renderAdvanceOrderTable();
+            cancelEdit('advanceOrder');
+        }
+
+        function renderAdvanceOrderTable() {
+            const tbody = document.querySelector('#advanceOrderTable tbody');
+            tbody.innerHTML = advanceOrders.map((o, i) => `
+                <tr>
+                    <td>${o.id}</td>
+                    <td>${getCustomerName(o.customerId)}</td>
+                    <td>${getEmployeeName(o.employeeId)}</td>
+                    <td>${o.date}</td>
+                    <td>${o.deliveryDate}</td>
+                    <td>${o.weight}</td>
+                    <td>₹${o.amount}</td>
+                    <td>₹${o.advancePaid}</td>
+                    <td>${o.paymentMethod}</td>
+                    <td>${o.status}</td>
+                    <td>
+                        <button class="action-btn edit-btn" onclick="editAdvanceOrder(${i})">Edit</button>
+                        <button class="action-btn delete-btn" onclick="deleteAdvanceOrder(${i})">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function editAdvanceOrder(index) {
+            const o = advanceOrders[index];
+            document.getElementById('advanceOrderID').value = o.id;
+            document.getElementById('advanceCustomerID').value = o.customerId;
+            document.getElementById('advanceEmployeeID').value = o.employeeId;
+            document.getElementById('advanceOrderDate').value = o.date;
+            document.getElementById('advanceDeliveryDate').value = o.deliveryDate;
+            document.getElementById('advanceWeight').value = o.weight;
+            document.getElementById('advanceAmount').value = o.amount;
+            document.getElementById('advancePaid').value = o.advancePaid;
+            document.getElementById('advancePaymentMethod').value = o.paymentMethod;
+            document.getElementById('advanceStatus').value = o.status;
+            
+            editMode.advanceOrder = index;
+            document.getElementById('advanceOrderSubmitBtn').textContent = 'Update Advance Order';
+            window.scrollTo(0, 0);
+        }
+
+        function deleteAdvanceOrder(index) {
+            if(confirm('Are you sure you want to delete this advance order?')) {
+                advanceOrders.splice(index, 1);
+                renderAdvanceOrderTable();
+                showAlert('order', 'Advance order deleted successfully!');
+            }
+        }
+
+        // Vyaj Order functions
+        function handleVyajOrderSubmit(e) {
+            e.preventDefault();
+            const order = {
+                id: document.getElementById('vyajOrderID').value,
+                customerId: document.getElementById('vyajCustomerID').value,
+                employeeId: document.getElementById('vyajEmployeeID').value,
+                date: document.getElementById('vyajOrderDate').value,
+                dueDate: document.getElementById('vyajDueDate').value,
+                weight: document.getElementById('vyajWeight').value,
+                baseAmount: document.getElementById('vyajBaseAmount').value,
+                rate: document.getElementById('vyajRate').value,
+                vyajAmount: document.getElementById('vyajAmount').value,
+                month1: document.getElementById('vyajMonth1').value,
+                month2: document.getElementById('vyajMonth2').value,
+                month3: document.getElementById('vyajMonth3').value,
+                totalPrice: document.getElementById('vyajTotalPrice').value,
+                paidAmount: document.getElementById('vyajPaidAmount').value,
+                status: document.getElementById('vyajPaymentStatus').value
+            };
+            
+            if (editMode.vyajOrder !== null) {
+                vyajOrders[editMode.vyajOrder] = order;
+                showAlert('order', 'Vyaj order updated successfully!');
+                editMode.vyajOrder = null;
+            } else {
+                vyajOrders.push(order);
+                showAlert('order', 'Vyaj order added successfully!');
+            }
+            
+            renderVyajOrderTable();
+            cancelEdit('vyajOrder');
+        }
+
+        function renderVyajOrderTable() {
+            const tbody = document.querySelector('#vyajOrderTable tbody');
+            tbody.innerHTML = vyajOrders.map((o, i) => `
+                <tr>
+                    <td>${o.id}</td>
+                    <td>${getCustomerName(o.customerId)}</td>
+                    <td>${o.date}</td>
+                    <td>${o.dueDate}</td>
+                    <td>${o.weight}</td>
+                    <td>₹${o.baseAmount}</td>
+                    <td>${o.rate}%</td>
+                    <td>₹${o.totalPrice}</td>
+                    <td>₹${o.paidAmount}</td>
+                    <td>${o.status}</td>
+                    <td>
+                        <button class="action-btn edit-btn" onclick="editVyajOrder(${i})">Edit</button>
+                        <button class="action-btn delete-btn" onclick="deleteVyajOrder(${i})">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function editVyajOrder(index) {
+            const o = vyajOrders[index];
+            document.getElementById('vyajOrderID').value = o.id;
+            document.getElementById('vyajCustomerID').value = o.customerId;
+            document.getElementById('vyajEmployeeID').value = o.employeeId;
+            document.getElementById('vyajOrderDate').value = o.date;
+            document.getElementById('vyajDueDate').value = o.dueDate;
+            document.getElementById('vyajWeight').value = o.weight;
+            document.getElementById('vyajBaseAmount').value = o.baseAmount;
+            document.getElementById('vyajRate').value = o.rate;
+            document.getElementById('vyajAmount').value = o.vyajAmount;
+            document.getElementById('vyajMonth1').value = o.month1;
+            document.getElementById('vyajMonth2').value = o.month2;
+            document.getElementById('vyajMonth3').value = o.month3;
+            document.getElementById('vyajTotalPrice').value = o.totalPrice;
+            document.getElementById('vyajPaidAmount').value = o.paidAmount;
+            document.getElementById('vyajPaymentStatus').value = o.status;
+            
+            editMode.vyajOrder = index;
+            document.getElementById('vyajOrderSubmitBtn').textContent = 'Update Vyaj Order';
+            window.scrollTo(0, 0);
+        }
+
+        function deleteVyajOrder(index) {
+            if(confirm('Are you sure you want to delete this vyaj order?')) {
+                vyajOrders.splice(index, 1);
+                renderVyajOrderTable();
+                showAlert('order', 'Vyaj order deleted successfully!');
+            }
+        }
+
+        // Gold Sale functions
+        function handleGoldsaleSubmit(e) {
+            e.preventDefault();
+            const sale = {
+                id: document.getElementById('goldSaleID').value,
+                customerId: document.getElementById('goldCustomerID').value,
+                productId: document.getElementById('goldProductID').value,
+                quantity: document.getElementById('goldQuantity').value,
+                purity: document.getElementById('goldPurity').value,
+                gettingDate: document.getElementById('goldGettingDate').value,
+                totalAmount: document.getElementById('goldTotalAmount').value,
+                paymentCustomer: document.getElementById('goldPaymentCustomer').value,
+                paymentMethod: document.getElementById('goldPaymentMethod').value
+            };
+            
+            if (editMode.goldsale !== null) {
+                goldSales[editMode.goldsale] = sale;
+                showAlert('goldsale', 'Gold sale updated successfully!');
+                editMode.goldsale = null;
+            } else {
+                goldSales.push(sale);
+                showAlert('goldsale', 'Gold sale recorded successfully!');
+            }
+            
+            renderGoldsaleTable();
+            cancelEdit('goldsale');
+        }
+
+        function renderGoldsaleTable() {
+            const tbody = document.querySelector('#goldsaleTable tbody');
+            tbody.innerHTML = goldSales.map((g, i) => `
+                <tr>
+                    <td>${g.id}</td>
+                    <td>${getCustomerName(g.customerId)}</td>
+                    <td>${getProductName(g.productId)}</td>
+                    <td>${g.quantity}</td>
+                    <td>${g.purity}K</td>
+                    <td>${g.gettingDate}</td>
+                    <td>₹${g.totalAmount}</td>
+                    <td>₹${g.paymentCustomer}</td>
+                    <td>${g.paymentMethod}</td>
+                    <td>
+                        <button class="action-btn edit-btn" onclick="editGoldsale(${i})">Edit</button>
+                        <button class="action-btn delete-btn" onclick="deleteGoldsale(${i})">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function editGoldsale(index) {
+            const g = goldSales[index];
+            document.getElementById('goldSaleID').value = g.id;
+            document.getElementById('goldCustomerID').value = g.customerId;
+            document.getElementById('goldProductID').value = g.productId;
+            document.getElementById('goldQuantity').value = g.quantity;
+            document.getElementById('goldPurity').value = g.purity;
+            document.getElementById('goldGettingDate').value = g.gettingDate;
+            document.getElementById('goldTotalAmount').value = g.totalAmount;
+            document.getElementById('goldPaymentCustomer').value = g.paymentCustomer;
+            document.getElementById('goldPaymentMethod').value = g.paymentMethod;
+            
+            editMode.goldsale = index;
+            document.getElementById('goldsaleSubmitBtn').textContent = 'Update Gold Sale';
+            window.scrollTo(0, 0);
+        }
+
+        function deleteGoldsale(index) {
+            if(confirm('Are you sure you want to delete this gold sale?')) {
+                goldSales.splice(index, 1);
+                renderGoldsaleTable();
+                showAlert('goldsale', 'Gold sale deleted successfully!');
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            setAutoID('customer');
+            renderCustomerTable();
+            renderEmployeeTable();
+            renderSupplierTable();
+            renderProductTable();
+            renderInventoryTable();
+            renderBillsTable();
+            renderRegularOrderTable();
+            renderAdvanceOrderTable();
+            renderVyajOrderTable();
+            renderGoldsaleTable();
+            updateAllDropdowns();
+        });
+    </script>
+</body>
+</html>
